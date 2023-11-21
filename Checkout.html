@@ -57,6 +57,7 @@ function updateLoadingText() {
 }   
   document.getElementById("errorText").textContent = "";
   const usernameInput = document.getElementById("usernameInput");
+
   const usernameValue = usernameInput.value.trim();
 
   if (usernameValue.length === 0) {
@@ -73,9 +74,10 @@ function updateLoadingText() {
     const intervalId = setInterval(updateLoadingText, 250);
     var username = document.getElementById("usernameInput").value;
     var plan = parseInt(textAmount.match(numberPattern)[0]);
-    var data = { "username": username};
+    var data = { "username": username,
+               	 "plan": plan};
 
-    fetch("http://13.244.63.193", {
+    fetch("https://iggrowth--deegrol.repl.co/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
