@@ -1,14 +1,14 @@
 @font-face {
     font-family: lato-light;
-    src: url(Lato-Light.ttf);
+    src: url(Fonts/Lato-Light.ttf);
 }
 @font-face {
     font-family: prompt;
-    src: url(Prompt-SemiBold.ttf);
+    src: url(Fonts/Prompt-SemiBold.ttf);
 }
 @font-face {
     font-family: lato;
-    src: url(Lato-Regular.ttf);
+    src: url(Fonts/Lato-Regular.ttf);
 }
 /* General Styling */ 
 body{
