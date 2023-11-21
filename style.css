@@ -1,14 +1,14 @@
 @font-face {
     font-family: lato-light;
-    src: url('https://yourusername.github.io/IGgrowth-online/store/fonts/Lato-Light.ttf');
+    src: url(Lato-Light.ttf);
 }
 @font-face {
     font-family: prompt;
-    src: url(Fonts/Prompt-SemiBold.ttf);
+    src: url(Prompt-SemiBold.ttf);
 }
 @font-face {
     font-family: lato;
-    src: url(Fonts/Lato-Regular.ttf);
+    src: url(Lato-Regular.ttf);
 }
 /* General Styling */ 
 body{
