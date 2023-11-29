@@ -20,8 +20,20 @@
                 });
         });
 
+        function getAccessToken() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessToken = urlParams.get('code'); // Assuming 'code' is the parameter name for the access token
+
+            if (accessToken) {
+                document.getElementById('tokenResult').innerText = `Access Token: ${accessToken}`; // Update 'accessToken' to 'tokenResult'
+            } else {
+                document.getElementById('tokenResult').innerText = 'Access Token not found.';
+            }
+        }
+
         // Call the function when the page loads
         window.onload = getAccessToken;
     </script>
 </body>
 </html>
+
