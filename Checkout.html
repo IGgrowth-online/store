@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IGgrowth | Checkout</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/jpg" href="images/BannerMaker_28022023_2111111.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header class="Header" style="height: 70px;">
+            <a href="index.html">
+            <img src="images/BannerMaker_27022023_205920.png" height="55px" style="position: relative; justify-content: center;">
+            </a>
+            <a href="index.html">
+            <button id="back">&lt;Back</button>
+            </a>
+        </header>
+        <div style="position: absolute; background-color: #F3F6FD; width: 100%; height: 100%;"></div>
+        <div style="display: flex; justify-content: center;">
+            <div id="checkout-box">
+                <div style="position: absolute; display: flex; flex-direction: column; align-items: center;">
+                    <h3 id="text-amount">100 Instagram Followers</h3>
+                    <div id="dividing-line"></div>
+                    <input type="text" id="usernameInput" placeholder="Instagram username">
+                    <input type="text" id="emailInput" placeholder="Email address">
+                    <button id="submitBtn">Continue</button>
+                    <span id="errorText"></span>
+                    <div id="loadingText" style="font-weight: bold;"></div>
+                    <div style="display: flex; justify-content: center;">
+                    <a href="Buy Instagram Followers.html" style="position: absolute; top: 310px;">
+                        <button id="select-different">Pick a different package</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="index.js"></script>
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const textValue = localStorage.getItem('textValue');
+  const textElement = document.getElementById('text-amount');
+  textElement.textContent = textValue +' Instagram Followers';
+});
+
+// Function to send data to AWS and redirect the user
+const DataToAWS = async () => {
+    const cents = localStorage.getItem('cents');
+    const textValue = localStorage.getItem('textValue');
+    var username = document.getElementById("usernameInput").value;
+    var email = document.getElementById('emailInput').value;
+    const data = {cents: cents,
+                        amount: textValue, 
+                        username: username,
+                        email: email};
+
+    fetch('http://13.49.49.62:80/amount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+};
+
+// Attach the function to the button click event
+document.getElementById('submitBtn').addEventListener('click', DataToAWS);
+
+
+document.getElementById("submitBtn").addEventListener("click", function() {
+
+function updateLoadingText() {
+  const loadingText = document.getElementById("loadingText");
+  let dots = submitBtn.textContent;
+
+  if (dots === '...') {
+    dots = ".";
+  } else {
+    dots += ".";
+  }
+
+  submitBtn.textContent = dots;
+}   
+
+  const usernameInput = document.getElementById("usernameInput");
+  const emailInput = document.getElementById("emailInput");
+  const errorText = document.getElementById("errorText");
+  errorText.textContent = "";
+  usernameInput.style.borderColor = "";
+  emailInput.style.borderColor = "";
+
+  const usernameValue = usernameInput.value.trim();
+  const emailValue = emailInput.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (usernameValue.length === 0) {
+    usernameInput.style.borderColor = "red";
+    errorText.textContent = "Please enter a username";
+    return;
+  } else if (emailValue.length === 0) {
+    emailInput.style.borderColor = "red";
+    errorText.textContent = "Please enter an email address";
+    return; 
+  } else if (!emailRegex.test(emailValue)) {
+    emailInput.style.borderColor = "red";
+    errorText.textContent = "Please enter a valid email address";
+    return;
+  } else {
+    usernameInput.style.borderColor = "";
+    emailInput.style.borderColor = "";
+  }
+
+    // Start the animation
+    submitBtn.disabled = true;
+    document.getElementById("submitBtn").textContent = ".";
+    const textAmount = document.getElementById('text-amount').textContent;
+    const numberPattern = /\d+/;
+    const intervalId = setInterval(updateLoadingText, 250);
+    var username = document.getElementById("usernameInput").value;
+    var plan = parseInt(textAmount.match(numberPattern)[0]);
+    var data = { "username": username};
+
+    fetch("https://62f6-102-39-95-253.ngrok-free.app/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.Message === 'Please set your Instagram account to public') {
+        document.getElementById("errorText").textContent = "Please set your Instagram account to public";
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+      } else if (data.Message === 'Please enter a valid Instagram username') {
+    document.getElementById("errorText").textContent = "Please enter a valid Instagram username.";
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+      } else {
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      window.location.href = "http://13.49.49.62:80";
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      document.getElementById("errorText").textContent = "Please try again.";
+      setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+    });
+});
+    </script>
+    </body>
+</html>
