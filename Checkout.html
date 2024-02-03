@@ -121,7 +121,7 @@ function updateLoadingText() {
     var plan = parseInt(textAmount.match(numberPattern)[0]);
     var data = { "username": username};
 
-    fetch("https://62f6-102-39-95-253.ngrok-free.app/", {
+    fetch("http://10.100.100.149:7777/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
