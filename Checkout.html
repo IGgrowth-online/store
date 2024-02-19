@@ -121,7 +121,7 @@ function updateLoadingText() {
     var plan = parseInt(textAmount.match(numberPattern)[0]);
     var data = { "username": username};
     
-    fetch("http://10.100.100.149:7777/", {
+    fetch("https://238e-102-39-95-253.ngrok-free.app/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -149,7 +149,7 @@ function updateLoadingText() {
   clearInterval(intervalId);
 }, 0);
       submitBtn.textContent = "Continue";
-      window.location.href = "http://13.49.49.62:80";
+      window.location.href = "https://payment.iggrowth.online/amount";
       }
     })
     .catch(error => {
