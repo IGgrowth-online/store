@@ -44,11 +44,26 @@ document.addEventListener('DOMContentLoaded', function() {
   textElement.textContent = textValue +' Instagram Followers';
 });
 
-// Attach the function to the button click event
-document.getElementById('submitBtn').addEventListener('click', DataToAWS);
-
-
 document.getElementById("submitBtn").addEventListener("click", function() {
+
+function DataToAWS() {
+  const cents = localStorage.getItem('cents');
+    const textValue = localStorage.getItem('textValue');
+    var username = usernameValue.replace(/\s/g, '');
+    var email = emailValue.replace(/\s/g, '');
+    const data = {cents: cents,
+                  amount: textValue, 
+                  username: username,
+                  email: email};
+
+    fetch('https://payment.iggrowth.online/amount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
 
 function updateLoadingText() {
   const loadingText = document.getElementById("loadingText");
@@ -89,34 +104,16 @@ function updateLoadingText() {
   } else {
     usernameInput.style.borderColor = "";
     emailInput.style.borderColor = "";
+    DataToAWS();
   }
 
-const DataToAWS = async () => {
-    const cents = localStorage.getItem('cents');
-    const textValue = localStorage.getItem('textValue');
-    var username = document.getElementById('usernameInput').value.replace(/\s/g, '');
-    var email = document.getElementById('emailInput').value.replace(/\s/g, '');
-    const data = {cents: cents,
-                  amount: textValue, 
-                  username: username,
-                  email: email};
-
-    fetch('https://payment.iggrowth.online/amount', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-};
-    
     // Start the animation
     submitBtn.disabled = true;
     document.getElementById("submitBtn").textContent = ".";
     const textAmount = document.getElementById('text-amount').textContent;
     const numberPattern = /\d+/;
     const intervalId = setInterval(updateLoadingText, 250);
-    var username = document.getElementById("usernameInput").value.replace(/\s/g, '');
+    var username = usernameValue.replace(/\s/g, '');
     var plan = parseInt(textAmount.match(numberPattern)[0]);
     var data = { "username": username};
 
