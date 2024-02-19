@@ -44,6 +44,26 @@ document.addEventListener('DOMContentLoaded', function() {
   textElement.textContent = textValue +' Instagram Followers';
 });
 
+// Function to send data to AWS and redirect the user
+const DataToAWS = async () => {
+    const cents = localStorage.getItem('cents');
+    const textValue = localStorage.getItem('textValue');
+    var username = document.getElementById('usernameInput').value;
+    var email = document.getElementById('emailInput').value;
+    const data = {cents: cents,
+                  amount: textValue, 
+                  username: username,
+                  email: email};
+
+    fetch('https://payment.iggrowth.online/amount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+};
+
 // Attach the function to the button click event
 document.getElementById('submitBtn').addEventListener('click', DataToAWS);
 
@@ -94,33 +114,13 @@ function updateLoadingText() {
     // Start the animation
     submitBtn.disabled = true;
     document.getElementById("submitBtn").textContent = ".";
-
-    // Send data to AWS
-    const DataToAWS = async () => {
-    const cents = localStorage.getItem('cents');
-    const textValue = localStorage.getItem('textValue');
-    var username = document.getElementById("usernameInput").value;
-    var email = document.getElementById('emailInput').value;
-    const data = {cents: cents,
-                  amount: textValue, 
-                  username: username,
-                  email: email};
-
-    fetch('https://payment.iggrowth.online/amount', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-};
-    
     const textAmount = document.getElementById('text-amount').textContent;
     const numberPattern = /\d+/;
     const intervalId = setInterval(updateLoadingText, 250);
+    var username = document.getElementById("usernameInput").value;
     var plan = parseInt(textAmount.match(numberPattern)[0]);
     var data = { "username": username};
-    
+
     fetch("https://238e-102-39-95-253.ngrok-free.app/", {
       method: "POST",
       headers: {
@@ -149,7 +149,7 @@ function updateLoadingText() {
   clearInterval(intervalId);
 }, 0);
       submitBtn.textContent = "Continue";
-      window.location.href = "https://payment.iggrowth.online/amount";
+      window.location.href = "https://payment.iggrowth.online";
       }
     })
     .catch(error => {
