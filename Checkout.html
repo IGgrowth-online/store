@@ -104,7 +104,6 @@ function updateLoadingText() {
   } else {
     usernameInput.style.borderColor = "";
     emailInput.style.borderColor = "";
-    DataToAWS();
   }
 
     // Start the animation
@@ -144,8 +143,10 @@ function updateLoadingText() {
               setTimeout(() => {
   clearInterval(intervalId);
 }, 0);
-      submitBtn.textContent = "Continue";
-      window.location.href = "https://payment.iggrowth.online";
+  DataToAWS().then(() => {
+    submitBtn.textContent = "Continue";
+    window.location.href = "https://payment.iggrowth.online";
+  })
       }
     })
     .catch(error => {
