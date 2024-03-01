@@ -46,25 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById("submitBtn").addEventListener("click", function() {
 
-function DataToAWS() {
-  const cents = localStorage.getItem('cents');
-    const textValue = localStorage.getItem('textValue');
-    var username = usernameValue.replace(/\s/g, '');
-    var email = emailValue.replace(/\s/g, '');
-    const data = {cents: cents,
-                  amount: textValue, 
-                  username: username,
-                  email: email};
-
-    fetch('https://payment.iggrowth.online/amount', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-}
-
 function updateLoadingText() {
   const loadingText = document.getElementById("loadingText");
   let dots = submitBtn.textContent;
@@ -109,12 +90,12 @@ function updateLoadingText() {
     // Start the animation
     submitBtn.disabled = true;
     document.getElementById("submitBtn").textContent = ".";
-    const textAmount = document.getElementById('text-amount').textContent;
-    const numberPattern = /\d+/;
     const intervalId = setInterval(updateLoadingText, 250);
+    const cents = localStorage.getItem('cents');
+    const textValue = localStorage.getItem('textValue');
     var username = usernameValue.replace(/\s/g, '');
-    var plan = parseInt(textAmount.match(numberPattern)[0]);
-    var data = { "username": username};
+    var email = emailValue.replace(/\s/g, '');
+    var data = {'cents': cents, 'amount': textValue, 'username': username, 'email': email};
 
     fetch("https://238e-102-39-95-253.ngrok-free.app/", {
       method: "POST",
@@ -143,12 +124,8 @@ function updateLoadingText() {
               setTimeout(() => {
   clearInterval(intervalId);
 }, 0);
-  DataToAWS().then(() => {
     submitBtn.textContent = "Continue";
     window.location.href = "https://payment.iggrowth.online";
-  }).catch((error) => {
-    console.error(error);
-  });
       }
     })
     .catch(error => {
