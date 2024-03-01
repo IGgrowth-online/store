@@ -143,9 +143,11 @@ function updateLoadingText() {
               setTimeout(() => {
   clearInterval(intervalId);
 }, 0);
-    DataToAWS().then(() => {
+  DataToAWS().then(() => {
     submitBtn.textContent = "Continue";
     window.location.href = "https://payment.iggrowth.online";
+  }).catch((error) => {
+    console.error(error);
   });
       }
     })
