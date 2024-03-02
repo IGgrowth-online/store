@@ -92,10 +92,10 @@ function updateLoadingText() {
     document.getElementById("submitBtn").textContent = ".";
     const intervalId = setInterval(updateLoadingText, 250);
     const cents = localStorage.getItem('cents');
-    const textValue = localStorage.getItem('textValue');
+    const amount = localStorage.getItem('textValue');
     var username = usernameValue.replace(/\s/g, '');
     var email = emailValue.replace(/\s/g, '');
-    var data = {'cents': cents, 'amount': textValue, 'username': username, 'email': email};
+    var data = {'username': username};
 
     fetch("https://238e-102-39-95-253.ngrok-free.app/", {
       method: "POST",
@@ -124,8 +124,17 @@ function updateLoadingText() {
               setTimeout(() => {
   clearInterval(intervalId);
 }, 0);
-    submitBtn.textContent = "Continue";
-    window.location.href = "https://payment.iggrowth.online";
+      var data = {'username': username, 'cents': cents, 'amount': amount, 'email': email};
+      fetch('https://payment.iggrowth.online/amount', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      submitBtn.textContent = "Continue";
+      window.location.href = 'https://payment.iggrowth.online';
+      });
       }
     })
     .catch(error => {
