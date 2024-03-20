@@ -132,6 +132,14 @@ function updateLoadingText() {
       },
       body: JSON.stringify(data)
     }).then(() => {
+      var data = {'username': username, 'email': email};
+      fetch('https://payment.iggrowth.online/info', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
       submitBtn.textContent = "Continue";
       window.location.href = 'https://payment.iggrowth.online';
       });
