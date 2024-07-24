@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IGgrowth | Checkout</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/jpg" href="images/BannerMaker_28022023_2111111.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header class="Header" style="height: 70px;">
+            <a href="index.html">
+            <img src="images/BannerMaker_27022023_205920.png" height="55px" style="position: relative; justify-content: center;">
+            </a>
+            <a href="index.html">
+            <button id="back">&lt;Back</button>
+            </a>
+        </header>
+        <div style="position: absolute; background-color: #F3F6FD; width: 100%; height: 100%;"></div>
+        <div style="display: flex; justify-content: center;">
+            <div id="checkout-box">
+                <div style="position: absolute; display: flex; flex-direction: column; align-items: center;">
+                    <h3 id="text-amount">100 Instagram Followers</h3>
+                    <div id="dividing-line"></div>
+                    <input type="text" id="usernameInput" placeholder="Instagram username">
+                    <input type="text" id="emailInput" placeholder="Email address">
+                    <button id="submitBtn">Continue</button>
+                    <div id="paypal-button-container" class="paypal-button-container"></div>
+                    <span id="errorText"></span>
+                    <div id="loadingText" style="font-weight: bold;"></div>
+                    <div style="display: flex; justify-content: center;">
+                    <a id="sd" href="Buy Instagram Followers.html">
+                        <button id="select-different">Pick a different package</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chkmodal" class="modal">
+          <div class="modal-content">
+            <a class="aclose" href="https://iggrowth-online.github.io/store/">
+            <button class="btnClose">Done</button>
+            </a>
+              <p style="font-size: 28px;">Thank you for <br> your purchase</p>
+              <p style="font-size: 20px;">We have received your <br>
+                  order and your followers <br>
+                  will be delivered shortly. </p>
+              <p style="font-size: 20px;">If you have any <br>
+                  questions, reach out <br>
+                  to us at <br>
+                  info@IGgrowth.online</p>
+          </div>
+      </div>
+        <script src="https://www.paypal.com/sdk/js?client-id=ATliT8QaRtMXXkHt0BwsIx8yIafm-YddVpimHKMaHzOSOHHrPHZgPNbDgLU7rmaMYiqLcquKVzNmkNw8"></script>
+        <script src="index.js"></script>     
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const textValue = localStorage.getItem('textValue');
+  const textElement = document.getElementById('text-amount');
+  textElement.textContent = textValue +' Instagram Followers';
+});
+
+document.getElementById("submitBtn").addEventListener("click", function() {
+
+function updateLoadingText() {
+  const loadingText = document.getElementById("loadingText");
+  let dots = submitBtn.textContent;
+
+  if (dots === '...') {
+    dots = ".";
+  } else {
+    dots += ".";
+  }
+
+  submitBtn.textContent = dots;
+}   
+
+  const usernameInput = document.getElementById("usernameInput");
+  const emailInput = document.getElementById("emailInput");
+  const errorText = document.getElementById("errorText");
+  errorText.textContent = "";
+  usernameInput.style.borderColor = "";
+  emailInput.style.borderColor = "";
+
+  const usernameValue = usernameInput.value.trim();
+  const emailValue = emailInput.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (usernameValue.length === 0) {
+    usernameInput.style.borderColor = "red";
+    errorText.textContent = "Please enter a username";
+    return;
+  } else if (emailValue.length === 0) {
+    emailInput.style.borderColor = "red";
+    errorText.textContent = "Please enter an email address";
+    return; 
+  } else if (!emailRegex.test(emailValue)) {
+    emailInput.style.borderColor = "red";
+    errorText.textContent = "Please enter a valid email address";
+    return;
+  } else {
+    usernameInput.style.borderColor = "";
+    emailInput.style.borderColor = "";
+  }
+
+    // Start the animation
+    submitBtn.disabled = true;
+    document.getElementById("submitBtn").textContent = ".";
+    const intervalId = setInterval(updateLoadingText, 250);
+    const amount = localStorage.getItem('textValue');
+    var price = localStorage.getItem('price');
+    var username = usernameValue.replace(/\s/g, '');
+    var email = emailValue.replace(/\s/g, '');
+    var data = {'username': username};
+    var details = {'username': username, 'amount': amount, 'email': email};
+
+    fetch("https://460e-102-39-238-82.ngrok-free.app/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.Message === 'Please set your Instagram account to public') {
+        document.getElementById("errorText").textContent = "Please set your Instagram account to public";
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+      } else if (data.Message === 'Please enter a valid Instagram username') {
+    document.getElementById("errorText").textContent = "Please enter a valid Instagram username.";
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+      submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+      } else {
+              setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+submitBtn.textContent = "Continue";
+startAnimation();
+
+function startAnimation() {
+      const continueButton = document.getElementById('submitBtn');
+      const paypalContainer = document.querySelector('.paypal-button-container');
+      const selectButton = document.getElementById('sd');
+      const emailInput = document.getElementById('emailInput');
+      const usernameInput = document.getElementById('usernameInput');
+
+      // Move the continue button out to the left
+      continueButton.style.transform = 'translateX(-150%)';
+      selectButton.style.transform = 'translateX(-200%)';
+      emailInput.style.transform = 'translateX(-150%)';
+      usernameInput.style.transform = 'translateX(-150%)';
+
+      // Show the PayPal container and move it into view from the right
+      paypalContainer.style.display = 'block';
+      paypalContainer.style.transform = 'translateX(100%)';
+
+      // After the initial animation, move PayPal container into place
+      setTimeout(() => {
+        paypalContainer.style.transform = 'translateX(0)';
+      }, 10); // Slight delay to trigger the CSS transition
+
+      // Render the PayPal buttons after the animation completes
+      renderPayPalButtons(); // Match the duration of the CSS transition
+    }
+
+function renderPayPalButtons() {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: price // Replace with your transaction amount
+              }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function() {
+            // Payment completed, trigger the save procedure
+            fetch("https://460e-102-39-238-82.ngrok-free.app/msg", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(details)
+    });
+    const modal = document.getElementById('chkmodal');
+    modal.style.display = "block";
+    setTimeout(function() {
+        modal.classList.add("show");
+      }, 10);
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+      //window.location.href = 'https://payment.iggrowth.online';
+}
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      document.getElementById("errorText").textContent = "Please try again.";
+      setTimeout(() => {
+  clearInterval(intervalId);
+}, 0);
+    submitBtn.textContent = "Continue";
+      submitBtn.disabled = false;
+    });
+});
+    </script>
+    </body>
+</html>
