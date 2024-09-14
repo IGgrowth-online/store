@@ -56,9 +56,9 @@
         <script src="index.js"></script>     
         <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const textValue = localStorage.getItem('textValue');
+  const textAmount = localStorage.getItem('amount');
   const textElement = document.getElementById('text-amount');
-  textElement.textContent = textValue +' Instagram Followers';
+  textElement.textContent = textAmount +' Instagram Followers';
 });
 
 document.getElementById("submitBtn").addEventListener("click", function() {
@@ -108,12 +108,11 @@ function updateLoadingText() {
     submitBtn.disabled = true;
     document.getElementById("submitBtn").textContent = ".";
     const intervalId = setInterval(updateLoadingText, 250);
-    const amount = localStorage.getItem('textValue');
+    const amount = localStorage.getItem('amount');
     var price = localStorage.getItem('price');
     var username = usernameValue.replace(/\s/g, '');
     var email = emailValue.replace(/\s/g, '');
     var data = {'username': username};
-    var details = {'username': username, 'amount': amount, 'email': email};
 
     fetch("https://460e-102-39-238-82.ngrok-free.app/", {
       method: "POST",
@@ -139,6 +138,8 @@ function updateLoadingText() {
       submitBtn.textContent = "Continue";
       submitBtn.disabled = false;
       } else {
+        var userID = data.User_ID
+        var details = {'username': username, 'amount': amount, 'email': email, 'userID': userID};
               setTimeout(() => {
   clearInterval(intervalId);
 }, 0);
