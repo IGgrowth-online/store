@@ -108,7 +108,7 @@ function updateLoadingText() {
     submitBtn.disabled = true;
     document.getElementById("submitBtn").textContent = ".";
     const intervalId = setInterval(updateLoadingText, 250);
-    const amount = localStorage.getItem('amount');
+    var amount = localStorage.getItem('amount');
     var price = localStorage.getItem('price');
     var username = usernameValue.replace(/\s/g, '');
     var email = emailValue.replace(/\s/g, '');
