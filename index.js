@@ -7,10 +7,10 @@ button.forEach(button => {
 });
 
 function updateText() {
-  const buttonText = parseInt(event.target.id.substring(event.target.id.indexOf('-') + 1));
-  const amount = parseFloat(event.target.id.split('+')[1], 10);
-  localStorage.setItem('textValue', buttonText);
-  localStorage.setItem('price', amount);
+  const amount = parseInt(event.target.id.substring(event.target.id.indexOf('-') + 1));
+  const price = parseFloat(event.target.id.split('+')[1], 10);
+  localStorage.setItem('amount', amount);
+  localStorage.setItem('price', price);
   window.location.href = 'Checkout.html';
 }
 
