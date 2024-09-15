@@ -447,14 +447,14 @@ html{
     position: absolute;
     height: 520px; 
     width: 100%;
-    background-color: #FEFEFE;
+    background-color: #F6F6FD;
 }
 #buy-section2{
     position: absolute; 
     height: 550px; 
     width: 100%; 
     top: 580px; 
-    background-color: #F3F6FD;
+    background-color: #E7EDFA;
 }
 #Buy-Description{
     position: relative; 
