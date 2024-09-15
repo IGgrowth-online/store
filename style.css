@@ -801,16 +801,11 @@ html{
         margin-right: 28px;
     }
     #buy-section1{
-        position: absolute;
-        height: 700px; 
-        width: 100%; 
+        height: 730px;  
     }
     #buy-section2{
-        position: absolute; 
-        height: 800px; 
-        width: 100%; 
+        height: 800px;  
         top: 800px; 
-        background-color: #F3F6FD;
     }
     #Buy-Description h3{
         display: none;
@@ -1127,6 +1122,9 @@ html{
     }
     .body{
         top: 130px;
+    }
+    #buy-section1{
+        height: 880px;
     }
     #buy-section2{
         top: 950px;
