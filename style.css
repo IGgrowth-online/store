@@ -25,7 +25,7 @@ html { scroll-behavior: smooth; }
 #Header-Image {
   position: absolute;
   top: 5px;
-  left: 5%;
+  left: 4%;
   height: 55px;
 }
 .Header-Buttons {
@@ -432,6 +432,8 @@ html { scroll-behavior: smooth; }
   color: #7C7C7C;
   font-weight: bold;
 }
+.lower-body1 h1 {top: 120px;}
+.lower-body1 h3{top: 120px;}
 .lower-body2 {
   position: relative;
   display: flex;
@@ -467,7 +469,12 @@ html { scroll-behavior: smooth; }
   height: 1500px;
   background-color: #F3F6FD;
 }
-.Policy-content { text-align: left; }
+.Policy-content { 
+  text-align: left;
+  display: block;
+  width: 800px; 
+  margin: 0 auto;
+}
 #Footer-Policy { top: 1380px; }
 /* Checkout Page Styling */
 #back {
@@ -479,51 +486,6 @@ html { scroll-behavior: smooth; }
   border: none;
   background-color: transparent;
   cursor: pointer;
-}
-
-.paypal-card-container {
-    display: none;
-    width: 300px;
-    transform: translateX(100%);
-    transition: transform 0.5s ease;
-}
-
-.paypal-card-field {
-    box-sizing: border-box;
-    width: 100%;
-    height: 48px;
-    margin-bottom: 12px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    background: white;
-    overflow: hidden;
-}
-
-.paypal-card-row {
-    display: flex;
-    gap: 10px;
-}
-
-.paypal-card-small {
-    width: 50%;
-}
-
-#pay-button {
-    width: 100%;
-    height: 48px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#pay-button:disabled {
-    opacity: 0.6;
-    cursor: default;
-}
-
-#payment-error {
-    display: block;
-    margin-top: 10px;
 }
 
 #checkout-box {
@@ -614,13 +576,10 @@ html { scroll-behavior: smooth; }
 }
 #select-different:hover { text-decoration: underline; }
 /* Mobile Optimization */
-@media (max-width: 1100px) {
+@media (max-width: 1150px) {
 #Header-Image {
-  position: relative;
-  left: 0px;
-  top: -28px;
+  display: none;
 }
-.Header-Buttons { display: none; }
 }
 @media (max-width: 980px) {
 .body {
@@ -629,7 +588,7 @@ html { scroll-behavior: smooth; }
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 200px;
+  top: 300px;
 }
 .button-container {
   display: grid;
@@ -640,15 +599,14 @@ html { scroll-behavior: smooth; }
 .BuyButtons { margin-left: 28px; margin-right: 28px; }
 #buy-section1 {
   position: absolute;
-  height: 730px;
-  width: 100%;
+  height: 900px;
 }
 #buy-section2 {
   position: absolute;
   height: 800px;
-  width: 100%;
-  top: 800px;
+  top: 900px;
 }
+#Footer-Buy { top: 1580px; }
 #Buy-Description h3 { display: none; }
 #Buy-Description-Mobile {
   display: block;
@@ -658,44 +616,69 @@ html { scroll-behavior: smooth; }
   white-space: nowrap;
 }
 #HighQuality_2 { left: -71px; top: -49px; }
-.lower-body1 { position: relative; top: 210px; }
+.lower-body1 h1 {top: 20px;}
+.lower-body1 { position: relative; top: 400px; }
 .lower-body1 h3 { display: none; }
 .lower-body1 span {
   display: block;
+  top: 20px;
   margin-right: 5px;
   margin-left: 5px;
 }
 .lower-body2 {
   position: relative;
-  top: 250px;
+  top: 450px;
   white-space: normal;
 }
 .steps { margin: -20px; }
 .buy-steps { display: grid; grid-template-columns: repeat(1, 1fr); }
-#Price1 { left: 252px; top: -503px; }
-#Price2 { left: -122px; top: -369px; }
-#Price3 { left: 252px; top: -420px; }
-#Price4 { left: -122px; top: -286px; }
-#Price5 { left: 258px; top: -337px; }
-#Price6 { left: -115px; top: -203px; }
-#Price7 { left: 260px; top: -253px; }
-#Footer-Buy { top: 1550px; }
+#Price1 { left: 235px; top: -503px; }
+#Price2 { left: -134px; top: -369px; }
+#Price3 { left: 242px; top: -420px; }
+#Price4 { left: -130px; top: -285px; }
+#Price5 { left: 245px; top: -337px; }
+#Price6 { left: -125px; top: -202px; }
+#Price7 { left: 254px; top: -253px; }
 }
 @media (max-width: 900px) {
+#Header-Image{
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  top: -10px;
+}
+.Header-Buttons{display: none;}
+.Step1 { left: 20px; }
+.Step1 h2 { display: none; }
+.Step1 span { display: block; top: 74px; }
+#Step1-Images { left: 255px; top: 20px; }
+#textButton { left: -8px; top: 130px; }
+.Step2 { left: 20px; white-space: nowrap; }
+#Step2-Container { left: 0px; }
+.Step3 { left: 20px; }
+#Step3-Images { position: absolute; left: 540px; }
+.Step4 { left: 20px; white-space: nowrap; }
+#Step4-Container { left: 0px; }
+.Policy-content{
+  width: 90%;
+}
 #Policy-section1 {
   position: absolute;
   width: 100%;
-  height: 1800px;
+  height: 1550px;
   background-color: #F3F6FD;
 }
-#Footer-Policy { top: 1800px; }
+#Footer-Policy { top: 1430px; }
 .HomePictures { display: none; }
-.HomeItems { display: grid; place-items: center; }
-.HomeText {
-  position: relative;
+.HomeText{
   white-space: nowrap;
   left: 0px;
-  top: 160px;
+}
+.HomeItems {
+  display: block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 #section3 { height: 790px; }
 .Contact { grid-template-columns: repeat(1, 0fr); }
@@ -708,17 +691,9 @@ html { scroll-behavior: smooth; }
 #Footer-Home { top: 2400px; }
 }
 @media (max-width: 768px) {
-.Step1 { left: 20px; }
-.Step1 h2 { display: none; }
-.Step1 span { display: block; top: 74px; }
-#Step1-Images { left: 255px; top: 20px; }
-#textButton { left: -8px; top: 130px; }
-.Step2 { left: 20px; white-space: nowrap; }
-#Step2-Container { left: 0px; }
-.Step3 { left: 20px; }
-#Step3-Images { position: absolute; left: 540px; }
-.Step4 { left: 20px; white-space: nowrap; }
-#Step4-Container { left: 0px; }
+.Policy-content{ width: 95%; }
+#Policy-section1{ height: 1680px; }
+#Footer-Policy{ top: 1550px;}
 .social-links { top: 15px; }
 .Footer h3 { top: 25px; }
 .Footer Button {
@@ -763,56 +738,60 @@ html { scroll-behavior: smooth; }
 #back { display: none; }
 }
 @media (max-width: 570px) {
-.Steps-Images { display: none; }
-.Step2 h2 { display: none; }
-.Step2 span { display: block; top: 74px; }
-.Step3 h2 { display: none; }
-.Step3 span { display: block; top: 74px; }
-.Step4 h2 { display: none; }
-.Step4 span { display: block; top: 74px; }
+  #Policy-section1{ height: 1820px; }
+  #Footer-Policy{ top: 1700px;}
+  .Steps-Images { display: none; }
+  .Step2 h2 { display: none; }
+  .Step2 span { display: block; top: 74px; }
+  .Step3 h2 { display: none; }
+  .Step3 span { display: block; top: 74px; }
+  .Step4 h2 { display: none; }
+  .Step4 span { display: block; top: 74px; }
 }
 @media (max-width: 470px) {
-.HomeText h1 { font-size: 24px; }
-.HomeText h3 { font-size: 16px; }
-.Socials { width: 250px; }
-#Facebook-Image { width: 250px; }
+  #Policy-section1{ height: 1920px; }
+  #Footer-Policy{ top: 1800px;}
+  .HomeText h1 { font-size: 24px; }
+  .HomeText h3 { font-size: 16px; }
+  .Socials { width: 250px; }
+  #Facebook-Image { width: 250px; }
 }
 @media (max-width: 405px) {
-.HomeText h1 { display: none; }
-.HomeText h3 { display: none; }
-#Home-Text-Mobile-1 { display: block; }
-#Home-Text-Mobile-2 { display: block; }
-#HighQuality_2 { top: -73px; left: -25px; }
-.Contact { top: 1550px; }
-.Socials { width: 200px; }
-#Facebook-Image { width: 200px; }
-.BuyFollowers { top: 10px; }
-.body { top: 130px; }
-#buy-section1 { height: 880px; }
-#buy-section2 { top: 950px; }
-.lower-body1 { top: 320px; }
-.lower-body2 { top: 360px; }
-#Buy-Description-Mobile { display: none; }
-#Buy-Description-Mobile2 { display: block; font-size: 20px; }
-.BuyButtons { margin-left: 5px; margin-right: 5px; }
-#Followers-Text-1 { display: none; }
-#Followers-Text-2 { display: inline; }
-.Prices { display: none; }
-.Prices-Inline {
-  display: inline;
-  position: relative;
-  top: 2px;
-}
-#Footer-Buy { top: 1700px; }
-#Policy-section1 { height: 2080px; }
-#Footer-Policy { top: 2090px; }
-#checkout-box { width: 250px; }
-#dividing-line { width: 220px; top: 100px; }
-#text-amount { white-space: normal; }
-#usernameInput { width: 215px; }
-#emailInput { width: 215px; }
-#submitBtn { width: 210px; }
-#errorText { font-size: 14px; }
+  .HomeText h1 { display: none; }
+  .HomeText h3 { display: none; }
+  #Home-Text-Mobile-1 { display: block; }
+  #Home-Text-Mobile-2 { display: block; }
+  #HighQuality_2 { top: -53px; left: -25px; }
+  .Contact { top: 1550px; }
+  .Socials { width: 200px; }
+  #Facebook-Image { width: 200px; }
+  .BuyFollowers { top: 10px; }
+  .body { top: 250px; }
+  #buy-section1 { height: 1000px; }
+  #buy-section2 { top: 1000px; height: 920px; }
+  .lower-body1 { top: 450px; }
+  .lower-body2 { top: 500px; }
+  #Buy-Description-Mobile { display: none; }
+  #Buy-Description-Mobile2 { display: block; font-size: 20px; position: relative; top: 20px; }
+  .BuyButtons { margin-left: 5px; margin-right: 5px; }
+  #Followers-Text-1 { display: none; }
+  #Followers-Text-2 { display: inline; }
+  .Prices { display: none; }
+  .Prices-Inline {
+    display: inline;
+    position: relative;
+    top: 2px;
+  }
+  #Footer-Buy { top: 1800px; }
+  #Policy-section1 { height: 2210px; }
+  #Footer-Policy { top: 2090px; }
+  #checkout-box { width: 250px; }
+  #dividing-line { width: 220px; top: 100px; }
+  #text-amount { white-space: normal; }
+  #usernameInput { width: 215px; }
+  #emailInput { width: 215px; }
+  #submitBtn { width: 210px; }
+  #errorText { font-size: 14px; }
 }
 /* Shared styles extracted from repeated HTML attributes. */
 .site-header { height: 70px; }
