@@ -681,7 +681,7 @@ html { scroll-behavior: smooth; }
   margin: 0 auto;
 }
 #section3 { height: 790px; }
-.Contact { grid-template-columns: repeat(1, 0fr); }
+.Contact { grid-template-columns: repeat(1, 0fr); top: 1800px; }
 .Socials { height: 180px; top: -15px; }
 .Socials h3 { top: 95px; }
 .Socials h2 { top: 95px; }
