@@ -57,7 +57,7 @@ function updateLoadingText() {
     var email = emailValue.replace(/\s/g, '');
     var data = {'username': username};
 
-    fetch("desired-kingfish-deciding.ngrok-free.app", {
+    fetch("https://desired-kingfish-deciding.ngrok-free.app", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
