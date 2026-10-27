@@ -1,13 +1,32 @@
+// Username verification and the Yoco checkout both run on this server.
+const SERVER_URL = 'https://desired-kingfish-deciding.ngrok-free.app';
+const submitBtn = document.getElementById("submitBtn");
+const errorText = document.getElementById("errorText");
+
 document.addEventListener('DOMContentLoaded', function() {
   const textAmount = localStorage.getItem('amount');
   const textElement = document.getElementById('text-amount');
   textElement.textContent = textAmount +' Instagram Followers';
+
+  // Yoco sends the customer back here with ?status=cancelled|failed.
+  // Successful payments return to the Buy page instead, which shows the order confirmation.
+  const status = new URLSearchParams(window.location.search).get('status');
+  if (status === 'cancelled') {
+    errorText.textContent = "Payment was cancelled. You have not been charged.";
+  } else if (status === 'failed') {
+    errorText.textContent = "Payment did not go through. Please try again.";
+  }
 });
 
-document.getElementById("submitBtn").addEventListener("click", function() {
+// Re-enable the button if the customer comes back from Yoco with the browser's Back button.
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    submitBtn.textContent = "Continue";
+    submitBtn.disabled = false;
+  }
+});
 
 function updateLoadingText() {
-  const loadingText = document.getElementById("loadingText");
   let dots = submitBtn.textContent;
 
   if (dots === '...') {
@@ -17,11 +36,12 @@ function updateLoadingText() {
   }
 
   submitBtn.textContent = dots;
-}   
+}
+
+submitBtn.addEventListener("click", async function() {
 
   const usernameInput = document.getElementById("usernameInput");
   const emailInput = document.getElementById("emailInput");
-  const errorText = document.getElementById("errorText");
   errorText.textContent = "";
   usernameInput.style.borderColor = "";
   emailInput.style.borderColor = "";
@@ -37,124 +57,66 @@ function updateLoadingText() {
   } else if (emailValue.length === 0) {
     emailInput.style.borderColor = "red";
     errorText.textContent = "Please enter an email address";
-    return; 
+    return;
   } else if (!emailRegex.test(emailValue)) {
     emailInput.style.borderColor = "red";
     errorText.textContent = "Please enter a valid email address";
     return;
-  } else {
-    usernameInput.style.borderColor = "";
-    emailInput.style.borderColor = "";
   }
 
-    // Start the animation
-    submitBtn.disabled = true;
-    document.getElementById("submitBtn").textContent = ".";
-    const intervalId = setInterval(updateLoadingText, 250);
-    var amount = localStorage.getItem('amount');
-    var price = localStorage.getItem('price');
-    var username = usernameValue.replace(/\s/g, '');
-    var email = emailValue.replace(/\s/g, '');
-    var data = {'username': username};
+  const packageId = localStorage.getItem('amount');
+  if (!packageId) {
+    errorText.textContent = "Please pick a package first";
+    return;
+  }
 
-    fetch("https://desired-kingfish-deciding.ngrok-free.app", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.Message === 'Please set your Instagram account to public') {
-        document.getElementById("errorText").textContent = "Please set your Instagram account to public";
-              setTimeout(() => {
-  clearInterval(intervalId);
-}, 0);
-      submitBtn.textContent = "Continue";
-      submitBtn.disabled = false;
-      } else if (data.Message === 'Please enter a valid Instagram username') {
-    document.getElementById("errorText").textContent = "Please enter a valid Instagram username.";
-              setTimeout(() => {
-  clearInterval(intervalId);
-}, 0);
-      submitBtn.textContent = "Continue";
-      submitBtn.disabled = false;
-      } else {
-        var userID = data.User_ID
-        var details = {'username': username, 'amount': amount, 'email': email, 'userID': userID};
-              setTimeout(() => {
-  clearInterval(intervalId);
-}, 0);
-submitBtn.textContent = "Continue";
-startAnimation();
+  // Start the animation; it keeps running until the customer is sent to Yoco.
+  submitBtn.disabled = true;
+  submitBtn.textContent = ".";
+  const intervalId = setInterval(updateLoadingText, 250);
+  const username = usernameValue.replace(/^@/, '').replace(/\s/g, '');
+  const email = emailValue;
 
-function startAnimation() {
-      const continueButton = document.getElementById('submitBtn');
-      const paypalContainer = document.querySelector('.paypal-button-container');
-      const selectButton = document.getElementById('sd');
-      const emailInput = document.getElementById('emailInput');
-      const usernameInput = document.getElementById('usernameInput');
-
-      // Move the continue button out to the left
-      continueButton.style.transform = 'translateX(-150%)';
-      selectButton.style.transform = 'translateX(-200%)';
-      emailInput.style.transform = 'translateX(-150%)';
-      usernameInput.style.transform = 'translateX(-150%)';
-
-      // Show the PayPal container and move it into view from the right
-      paypalContainer.style.display = 'block';
-      paypalContainer.style.transform = 'translateX(100%)';
-
-      // After the initial animation, move PayPal container into place
-      setTimeout(() => {
-        paypalContainer.style.transform = 'translateX(0)';
-      }, 10); // Slight delay to trigger the CSS transition
-
-      // Render the PayPal buttons after the animation completes
-      renderPayPalButtons(); // Match the duration of the CSS transition
-    }
-
-function renderPayPalButtons() {
-      paypal.Buttons({
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: price // Replace with your transaction amount
-              }
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function() {
-            // Payment completed, trigger the save procedure
-            fetch("https://460e-102-39-238-82.ngrok-free.app/msg", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(details)
-    });
-    const modal = document.getElementById('chkmodal');
-    modal.style.display = "block";
-    setTimeout(function() {
-        modal.classList.add("show");
-      }, 10);
-          });
-        }
-      }).render('#paypal-button-container');
-    }
-
-}
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      document.getElementById("errorText").textContent = "Please try again.";
-      setTimeout(() => {
-  clearInterval(intervalId);
-}, 0);
+  function stopLoading(message) {
+    clearInterval(intervalId);
     submitBtn.textContent = "Continue";
-      submitBtn.disabled = false;
+    submitBtn.disabled = false;
+    errorText.textContent = message;
+  }
+
+  try {
+    // 1. Check that the Instagram account exists and is public.
+    const verifyResponse = await fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username })
     });
+    const verification = await verifyResponse.json();
+    if (verification.Message !== 'No error message found') {
+      stopLoading(verification.Message || "Please try again.");
+      return;
+    }
+
+    // 2. Create the Yoco checkout. The server sets the price from the package.
+    const checkoutResponse = await fetch(`${SERVER_URL}/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ package: packageId, username, email })
+    });
+    const checkout = await checkoutResponse.json();
+    if (!checkoutResponse.ok || !checkout.redirectUrl) {
+      stopLoading(checkout.error || "Could not start payment. Please try again.");
+      return;
+    }
+
+    // 3. Send the customer to Yoco's payment page.
+    window.location.href = checkout.redirectUrl;
+  } catch (error) {
+    console.error("Error:", error);
+    stopLoading("Please try again.");
+  }
 });
