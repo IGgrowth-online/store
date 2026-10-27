@@ -2,7 +2,6 @@
 document.querySelectorAll('.BuyButtons').forEach(button => {
   button.addEventListener('click', () => {
     localStorage.setItem('amount', button.dataset.amount);
-    localStorage.setItem('price', button.dataset.price);
     window.location.href = 'Checkout.html';
   });
 });
@@ -42,6 +41,14 @@ if (modal) {
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && modal.classList.contains('show')) hidePopup();
   });
+}
+
+// Order confirmation, shown when Yoco sends the customer back with ?status=success.
+// This only changes what the customer sees; paid orders are confirmed by Yoco's webhook on the server.
+const orderModal = document.getElementById('chkmodal');
+if (orderModal && new URLSearchParams(window.location.search).get('status') === 'success') {
+  orderModal.style.display = 'block';
+  setTimeout(() => orderModal.classList.add('show'), 10);
 }
 
 // Section links use the stylesheet's native smooth scrolling.
