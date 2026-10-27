@@ -213,10 +213,10 @@ html { scroll-behavior: smooth; }
   border: 2px solid;
   border-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   z-index: 1;
 }
-.iStock:hover { transform: scale(1.1); }
+.iStock:hover { transform: scale(1.05); }
 #iStock1 { left: -130px; top: -70px; }
 #iStock2 { left: -63px; top: 102px; }
 #iStock3 { left: -160px; top: 240px; }
