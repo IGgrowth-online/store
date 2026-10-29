@@ -18,25 +18,37 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Re-enable the button if the customer comes back from Yoco with the browser's Back button.
-window.addEventListener('pageshow', function(event) {
-  if (event.persisted) {
-    submitBtn.textContent = "Continue";
-    submitBtn.disabled = false;
-  }
-});
+let loadingInterval;
+let dotCount = 0;
 
 function updateLoadingText() {
-  let dots = submitBtn.textContent;
-
-  if (dots === '...') {
-    dots = ".";
-  } else {
-    dots += ".";
-  }
-
-  submitBtn.textContent = dots;
+  // Cycles ".", "..", "..." based on a counter, so it never builds on whatever text the button has.
+  dotCount = dotCount % 3 + 1;
+  submitBtn.textContent = '.'.repeat(dotCount);
 }
+
+function startLoading() {
+  clearInterval(loadingInterval);
+  submitBtn.disabled = true;
+  dotCount = 0;
+  updateLoadingText();
+  loadingInterval = setInterval(updateLoadingText, 250);
+}
+
+function stopLoading(message) {
+  clearInterval(loadingInterval);
+  submitBtn.textContent = "Continue";
+  submitBtn.disabled = false;
+  errorText.textContent = message;
+}
+
+// When the customer comes back from Yoco with the browser's Back button, the browser restores
+// this page as it was left, with the loading animation still running. Stop it and reset the button.
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    stopLoading("");
+  }
+});
 
 submitBtn.addEventListener("click", async function() {
 
@@ -71,18 +83,9 @@ submitBtn.addEventListener("click", async function() {
   }
 
   // Start the animation; it keeps running until the customer is sent to Yoco.
-  submitBtn.disabled = true;
-  submitBtn.textContent = ".";
-  const intervalId = setInterval(updateLoadingText, 250);
+  startLoading();
   const username = usernameValue.replace(/^@/, '').replace(/\s/g, '');
   const email = emailValue;
-
-  function stopLoading(message) {
-    clearInterval(intervalId);
-    submitBtn.textContent = "Continue";
-    submitBtn.disabled = false;
-    errorText.textContent = message;
-  }
 
   try {
     // 1. Check that the Instagram account exists and is public.
