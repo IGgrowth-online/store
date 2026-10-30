@@ -51,4 +51,17 @@ if (orderModal && new URLSearchParams(window.location.search).get('status') === 
   setTimeout(() => orderModal.classList.add('show'), 10);
 }
 
+// Header: scrolls up with the page for its first 20px, then stays at the top of the screen
+// with its background stretched to the screen edges (.Header.is-stuck in style.css).
+const header = document.querySelector('.Header');
+if (header) {
+  const headerTop = 20;
+  function updateHeader() {
+    header.style.top = Math.max(0, headerTop - window.scrollY) + 'px';
+    header.classList.toggle('is-stuck', window.scrollY >= headerTop);
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+}
+
 // Section links use the stylesheet's native smooth scrolling.
