@@ -9,9 +9,11 @@ body {
 }
 html { scroll-behavior: smooth; }
 .section { width: 100%; }
+/* The header stays fixed on screen. index.js moves it up with the first 20px of scrolling,
+   then adds .is-stuck once it reaches the top of the screen. */
 .Header {
-  position: absolute;
-  background-color:#E7EDFA;
+  position: fixed;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,14 +21,44 @@ html { scroll-behavior: smooth; }
   white-space: nowrap;
   width: 92%;
   margin-left: 4%;
-  border-radius: 25px;
   top: 20px;
+  border-radius: 25px;
+  box-shadow: 2px 2px 10px rgb(207, 207, 207);
+}
+/* The background is drawn separately so it can stretch to the screen edges
+   without moving the image and buttons inside the header. */
+.Header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #E7EDFA;
+  border-radius: 25px;
+  box-shadow: 2px 2px 10px rgb(207, 207, 207);
+  transition: left 0.3s ease, right 0.3s ease, border-radius 0.3s ease;
+}
+/* The 4% side gaps are 4/92 of the header's own width. */
+.Header.is-stuck::before {
+  left: calc(-400% / 92);
+  right: calc(-400% / 92);
+  border-radius: 0;
 }
 #Header-Image {
   position: absolute;
   top: 5px;
   left: 4%;
   height: 55px;
+}
+#Header-Image{
+  transition: left 0.3s ease;
+}
+/* On wide screens the logo moves left while the header is stretched.
+   At 1150px and below it is hidden or centred instead, so it stays put. */
+@media (min-width: 1151px) {
+  .Header.is-stuck #Header-Image { left: 1%; }
 }
 .Header-Buttons {
   background: transparent;
@@ -38,7 +70,7 @@ html { scroll-behavior: smooth; }
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 20;
   left: 0;
   top: 0;
   width: 100%;
@@ -213,10 +245,10 @@ html { scroll-behavior: smooth; }
   border: 2px solid;
   border-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
   z-index: 1;
 }
-.iStock:hover { transform: scale(1.05); }
+.iStock:hover { transform: scale(1.07); }
 #iStock1 { left: -130px; top: -70px; }
 #iStock2 { left: -63px; top: 102px; }
 #iStock3 { left: -160px; top: 240px; }
@@ -483,17 +515,6 @@ html { scroll-behavior: smooth; }
 }
 #Footer-Policy { top: 1380px; }
 /* Checkout Page Styling */
-#back {
-  position: absolute;
-  top: 20px;
-  left: 5%;
-  font-family: arial;
-  font-size: 20px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
 #checkout-box {
   position: absolute;
   background-color: white;
@@ -713,6 +734,8 @@ html { scroll-behavior: smooth; }
   left: 0px;
   top: 0px;
 }
+#BuyFollowers:hover { transform: none; background-position: bottom left;}
+.BuyButtons:hover { transform: none; background-position: bottom left;}
 #Footer-Button { position: relative; top: -22px; }
 .Footer-Button { display: grid; place-items: center; }
 .Footer h3 { font-size: 10px; }
